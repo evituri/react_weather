@@ -4,6 +4,7 @@ import { AuthContext } from "../../Router";
 import { Spinner, Container, Row, Col } from "react-bootstrap";
 import Navigation from "../../components/Navigation/Navigation";
 import UserList from "../../components/UserList/UserList";
+import Map from "../../components/Map/Map";
 
 
 const Home = () => {
@@ -41,6 +42,7 @@ const Home = () => {
             {!data.isLoading ? 
                 <Container>
                     <UserList users={data.users}></UserList>
+                    <Map api_key={state.google_key} users={data.users}></Map>
                 </Container> : 
                 <Container>
                     <Row>
