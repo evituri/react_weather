@@ -23,7 +23,7 @@ const Login = () => {
 
             let urlBody = `?client_id=${state.client_id}&client_secret=${state.client_secret}&code=${newUrl[1]}`;
 
-            fetch(`https://cors-anywhere.herokuaadspp.com/https://github.com/login/oauth/access_token${urlBody}`, {
+            fetch(`https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token${urlBody}`, {
                 method: "GET",
                 headers: {
                     "X-Requested-With": "XMLHttpRequest" 
