@@ -1,0 +1,25 @@
+.user-list {
+    .dimmed {
+        opacity: 0.2;
+    }
+
+    .data-row {
+        padding: 0;
+
+        .data-container {
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.2s ease-out;
+    
+            .user-data {
+                flex-basis: 60%;
+            }
+    
+            .weather-container {
+                flex-basis: 40%;
+            }
+        }
+    }
+}

@@ -9,7 +9,7 @@ import Map from "../../components/Map/Map";
 
 const Home = () => {
     const { state, dispatch } = useContext(AuthContext);
-    const [data, setData] = useState({ users: [], isLoading: true });
+    const [data, setData] = useState({ users: [], isLoading: true, selectedIndex: -1 });
 
     if (!state.isLoggedIn) {
         return <Redirect to="/login" />;
@@ -21,9 +21,11 @@ const Home = () => {
         })
             .then((response) => response.json())
             .then((users) => {
+                const userList = users.map((user) => Object.assign(user, {selected: false}));
                 setData({
+                    ...data,
                     isLoading: false,
-                    users: users,
+                    users: userList,
                 });
             })
     }, []);
@@ -36,13 +38,20 @@ const Home = () => {
         });
     }
 
+    const userSelected = (index) => {
+        setData({
+            ...data, 
+            selectedIndex: (data.selectedIndex !== index) ? index : -1
+        })
+    }
+
     return (
         <>
             <Navigation login={login} logoutFunction={() => handleLogout()}></Navigation>
             {!data.isLoading ? 
                 <Container>
-                    <UserList users={data.users}></UserList>
-                    <Map api_key={state.google_key} users={data.users}></Map>
+                    <UserList users={data.users} rowClicked={userSelected} selectedIndex={data.selectedIndex}></UserList>
+                    <Map users={data.users} selectedIndex={data.selectedIndex}></Map>
                 </Container> : 
                 <Container>
                     <Row>

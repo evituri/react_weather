@@ -6,6 +6,7 @@ export const initialState = {
     client_secret: process.env.REACT_APP_CLIENT_SECRET,
     proxy_url: process.env.REACT_APP_PROXY_URL,
     google_key: process.env.REACT_APP_GOOGLE_MAP_KEY,
+    openweather_key: process.env.REACT_APP_OPENWEATHER_KEY,
 };
 
 export const reducer = (state, action) => {
