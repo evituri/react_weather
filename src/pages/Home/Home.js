@@ -54,15 +54,9 @@ const Home = () => {
                     <Map users={data.users} selectedIndex={data.selectedIndex}></Map>
                 </Container> : 
                 <Container>
-                    <Row>
-                        <Col md={3} />
-                        <Col md={6}>
-                            <Spinner animation="border" role="status">
-                                <span className="sr-only">Loading...</span>
-                            </Spinner>
-                        </Col>
-                        <Col md={3} />
-                    </Row>
+                    <Spinner animation="border" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </Spinner>
                 </Container>
             }
         </>

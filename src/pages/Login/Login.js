@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import GithubIcon from "mdi-react/GithubIcon";
 import { AuthContext } from "../../Router";
 import { Spinner, Container, Row, Col, Button } from "react-bootstrap";
+import Error from "../../components/Error/Error";
 
 
 const Login = () => {
@@ -22,18 +23,22 @@ const Login = () => {
 
             let urlBody = `?client_id=${state.client_id}&client_secret=${state.client_secret}&code=${newUrl[1]}`;
 
-            fetch(`https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token${urlBody}`, {
+            fetch(`https://cors-anywhere.herokuaadspp.com/https://github.com/login/oauth/access_token${urlBody}`, {
                 method: "GET",
                 headers: {
                     "X-Requested-With": "XMLHttpRequest" 
                 },
             })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    return response;   
+                })
                 .then(response => response.text())
                 .then(paramsString => {
                     let params = new URLSearchParams(paramsString);
                     const access_token = params.get("access_token");
-                    const scope = params.get("scope");
-                    const token_type = params.get("token_type");
             
                     return fetch(
                         `https://api.github.com/user`, {
@@ -55,7 +60,7 @@ const Login = () => {
                 .catch(error => {
                     setData({
                         isLoading: false,
-                        errorMessage: JSON.stringify(error)
+                        errorMessage: error.message
                     });
                 });
         }
@@ -67,6 +72,7 @@ const Login = () => {
 
     return (
         <div className="login-container">
+            <Error message={data.errorMessage}></Error>
             {data.isLoading ? (
                 <Container>
                     <Row>
@@ -85,7 +91,6 @@ const Login = () => {
                         <Col md={3} />
                         <Col md={6}>
                             <h1>Welcome</h1>
-                            <span>{data.errorMessage}</span>
                         </Col>
                         <Col md={3} />
                     </Row>
